@@ -4,6 +4,7 @@ import Image from 'next/image';
 import TextIconButton from './TextIconButton';
 import NotificationCard from '../modules/NotificationCard';
 import { notificationData } from '../../constants/index';
+import Button from './Button';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -48,6 +49,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                     alt="bell-icon"
                   />
                 }
+                actionButton={notification.hasButton && <Button text="رزرو تور" />}
               />
             ))}
           </div>
@@ -99,9 +101,9 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
               opacity: { duration: 0.2, ease: 'easeInOut' },
             }}
           >
-            <div className="relative h-full flex flex-col  gap-4">
+            <div className="relative h-full flex flex-col  ">
               {/* Close button */}
-              <div className="w-full bg-white h-[100px] flex items-center justify-between  ">
+              <div className="w-full bg-white min-h-[100px] flex items-center justify-between  ">
                 <div>
                   <button
                     onClick={onClose}
@@ -139,7 +141,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
               </div>
 
               {/* Content */}
-              <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div>
+              <div className="flex-grow overflow-y-auto pt-4">{getContent()}</div>
             </div>
           </motion.div>
         </div>
