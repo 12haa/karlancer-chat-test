@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface DrawerProps {
@@ -8,6 +8,12 @@ interface DrawerProps {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
+  const drawerPosition = useMemo(() => {
+    return {
+      initial: '100%',
+      exit: '100%',
+    };
+  }, []);
   // Sample content for each drawer type
   const getContent = () => {
     switch (content) {
@@ -61,38 +67,52 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             onClick={onClose}
           />
 
           {/* Drawer */}
           <motion.div
-            className="absolute top-0 right-0 h-full w-[90%] max-w-md bg-white shadow-lg"
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30, mass: 0.8 },
-              opacity: { duration: 0.2, ease: "easeInOut" }
+            className="absolute top-0 right-0 h-full w-[90%] max-w-md bg-white shadow-lg "
+            initial={{
+              x: drawerPosition.initial,
+              opacity: 0,
             }}
-            dir="ltr" // Ensure the drawer content remains in LTR
+            animate={{ x: 0, opacity: 1 }}
+            exit={{
+              x: drawerPosition.exit,
+              opacity: 0,
+            }}
+            transition={{
+              x: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8 },
+              opacity: { duration: 0.2, ease: 'easeInOut' },
+            }}
           >
             <div className="relative h-full flex flex-col">
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10"
+                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10 rtl:right-auto rtl:left-4"
                 aria-label="Close drawer"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
               {/* Content */}
-              <div className="flex-grow overflow-y-auto pt-14">
-                {getContent()}
-              </div>
+              <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div>
             </div>
           </motion.div>
         </div>
