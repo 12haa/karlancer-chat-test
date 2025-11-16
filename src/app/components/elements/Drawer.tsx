@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -8,12 +9,6 @@ interface DrawerProps {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
-  const drawerPosition = useMemo(() => {
-    return {
-      initial: '100%',
-      exit: '100%',
-    };
-  }, []);
   // Sample content for each drawer type
   const getContent = () => {
     switch (content) {
@@ -73,16 +68,10 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
 
           {/* Drawer */}
           <motion.div
-            className="absolute top-0 right-0 h-full w-[90%] max-w-md bg-white shadow-lg "
-            initial={{
-              x: drawerPosition.initial,
-              opacity: 0,
-            }}
+            className="absolute top-0 right-0 h-full w-[100%] max-w-md bg-white shadow-lg"
+            initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{
-              x: drawerPosition.exit,
-              opacity: 0,
-            }}
+            exit={{ x: '100%', opacity: 0 }}
             transition={{
               x: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8 },
               opacity: { duration: 0.2, ease: 'easeInOut' },
@@ -92,23 +81,15 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10 rtl:right-auto rtl:left-4"
+                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10 cursor-pointer"
                 aria-label="Close drawer"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <Image
+                  src="../../../../assets/icons/arrowRight.svg"
+                  width={28}
+                  height={28}
+                  alt="arrow-right"
+                />
               </button>
 
               {/* Content */}
