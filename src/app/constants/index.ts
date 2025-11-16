@@ -78,29 +78,59 @@ export const supportData = [
     title: 'راهنمای استفاده از سامانه',
     content: 'در این بخش می‌توانید راهنمای کامل استفاده از سامانه را مشاهده کنید.',
     status: 'باز',
+    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
   },
   {
     id: 2,
     title: 'پشتیبانی آنلاین',
     content: 'در صورت نیاز به کمک، می‌توانید با پشتیبانی آنلاین تماس بگیرید.',
     status: 'در حال بررسی',
+    timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // yesterday
   },
   {
     id: 3,
     title: 'تیکت پشتیبانی',
     content: 'در این بخش می‌توانید تیکت پشتیبانی خود را ثبت کنید.',
     status: 'پاسخ داده شده',
+    timestamp: new Date().toISOString(), // today
   },
   {
     id: 4,
     title: 'تماس تلفنی',
     content: 'شماره تماس پشتیبانی: 021-12345678',
     status: 'بسته شده',
+    timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
   },
   {
     id: 5,
     title: 'سوالات متداول',
     content: 'پاسخ به سوالات متداول در این بخش موجود است.',
     status: 'در حال بررسی',
+    timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
   },
 ];
+
+// Utility function to format timestamps as relative time
+export const formatRelativeTime = (timestamp: string): string => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  // Calculate days difference
+  const days = Math.floor(diffInSeconds / (60 * 60 * 24));
+
+  // Handle different cases
+  if (days === 0) {
+    // Today - show time
+    return date.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+  } else if (days === 1) {
+    return 'دیروز';
+  } else if (days === 2) {
+    return 'پریروز';
+  } else if (days < 7) {
+    return `${days} روز قبل`;
+  } else {
+    // More than a week ago, show formatted date
+    return date.toLocaleDateString('fa-IR');
+  }
+};

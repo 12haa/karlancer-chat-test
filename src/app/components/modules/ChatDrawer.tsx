@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../elements/Button';
+import { formatRelativeTime } from '../../constants/index';
 
 interface ChatDrawerProps {
   isOpen: boolean;
@@ -29,9 +30,9 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
 
   // Sample chat messages
   const [messages, setMessages] = useState([
-    { id: 1, text: 'سلام، چطور می‌تونم کمکتون کنم؟', sender: 'support', time: '10:30' },
-    { id: 2, text: 'من نمی‌تونم به حساب خودم وارد شم.', sender: 'user', time: '10:31' },
-    { id: 3, text: 'می‌تونید رمز عبورتون رو چک کنید؟', sender: 'support', time: '10:32' },
+    { id: 1, text: 'سلام، چطور می‌تونم کمکتون کنم؟', sender: 'support', timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString() }, // 30 minutes ago
+    { id: 2, text: 'من نمی‌تونم به حساب خودم وارد شم.', sender: 'user', timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString() }, // 25 minutes ago
+    { id: 3, text: 'می‌تونید رمز عبورتون رو چک کنید؟', sender: 'support', timestamp: new Date(Date.now() - 20 * 60 * 1000).toISOString() }, // 20 minutes ago
   ]);
 
   const [newMessage, setNewMessage] = useState('');
@@ -42,7 +43,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
         id: messages.length + 1,
         text: newMessage,
         sender: 'user',
-        time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
+        timestamp: new Date().toISOString(),
       };
       setMessages([...messages, newMsg]);
       setNewMessage('');
@@ -130,7 +131,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                             message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
                           }`}
                         >
-                          {message.time}
+                          {formatRelativeTime(message.timestamp)}
                         </p>
                       </div>
                     </div>

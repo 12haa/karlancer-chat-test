@@ -74,6 +74,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                 title={supportItem.title}
                 content={supportItem.content}
                 status={supportItem.status}
+                timestamp={supportItem.timestamp}
                 icon={
                   <Image
                     src={'../../../../assets/icons/headphone.svg'}

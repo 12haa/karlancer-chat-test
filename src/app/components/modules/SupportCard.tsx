@@ -1,14 +1,16 @@
 import React from 'react';
+import { formatRelativeTime } from '../../constants/index';
 
 interface SupportCardProps {
   title: string;
   content: string;
   status: string;
+  timestamp: string;
   icon?: React.ReactNode;
   onClick?: () => void;
 }
 
-const SupportCard: React.FC<SupportCardProps> = ({ title, content, status, icon, onClick }) => {
+const SupportCard: React.FC<SupportCardProps> = ({ title, content, status, timestamp, icon, onClick }) => {
   // Define status colors
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -39,8 +41,13 @@ const SupportCard: React.FC<SupportCardProps> = ({ title, content, status, icon,
         )}
       </div>
       <div className="flex-grow overflow-hidden flex flex-col">
-        <h3 className="text-gray-800 font-semibold text-right mb-1">{title}</h3>
-        <p className="text-gray-600 text-right text-sm overflow-hidden overflow-ellipsis line-clamp-2 flex-grow">
+        <div className="flex justify-between items-start">
+          <h3 className="text-gray-800 font-semibold text-right">{title}</h3>
+          <span className="text-xs text-gray-500 whitespace-nowrap pr-2">
+            {formatRelativeTime(timestamp)}
+          </span>
+        </div>
+        <p className="text-gray-600 text-right text-sm overflow-hidden overflow-ellipsis line-clamp-2 flex-grow mt-1">
           {content}
         </p>
       </div>
