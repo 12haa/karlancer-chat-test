@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import TextIconButton from './TextIconButton';
@@ -10,9 +10,22 @@ interface DrawerProps {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
-  // Sample content for each drawer type
+  // State to manage the active tab within the drawer
+  const [activeTab, setActiveTab] = useState<'notifications' | 'support'>('notifications');
+
+  // Update active tab when content prop changes (for initial open)
+  React.useEffect(() => {
+    // When the drawer opens with notifications, we show the notifications tab
+    if (content === 'notifications') {
+      setActiveTab('notifications');
+    } else {
+      setActiveTab('support');
+    }
+  }, [content]);
+
+  // Content for each tab
   const getContent = () => {
-    switch (content) {
+    switch (activeTab) {
       case 'notifications':
         return (
           <div className="p-4">
@@ -24,32 +37,25 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
             </div>
           </div>
         );
-      case 'wallet':
+      case 'support':
         return (
           <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Wallet</h2>
+            <h2 className="text-xl font-bold mb-4">Support</h2>
             <div className="space-y-2">
-              <div className="p-3 bg-gray-100 rounded">Balance: $1,234.56</div>
-              <div className="p-3 bg-gray-100 rounded">Recent transactions</div>
-              <div className="p-3 bg-gray-100 rounded">Add payment method</div>
-            </div>
-          </div>
-        );
-      case 'menu':
-        return (
-          <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Menu</h2>
-            <div className="space-y-2">
-              <div className="p-3 bg-gray-100 rounded">Settings</div>
-              <div className="p-3 bg-gray-100 rounded">Profile</div>
-              <div className="p-3 bg-gray-100 rounded">Help & Support</div>
-              <div className="p-3 bg-gray-100 rounded">Logout</div>
+              <div className="p-3 bg-gray-100 rounded">Contact support</div>
+              <div className="p-3 bg-gray-100 rounded">Frequently asked questions</div>
+              <div className="p-3 bg-gray-100 rounded">Open ticket</div>
             </div>
           </div>
         );
       default:
         return <div className="p-4">Content not found</div>;
     }
+  };
+
+  // Handle tab selection
+  const handleTabSelect = (tab: 'notifications' | 'support') => {
+    setActiveTab(tab);
   };
 
   return (
@@ -80,7 +86,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
           >
             <div className="relative h-full flex flex-col  gap-4">
               {/* Close button */}
-              <div className="w-full bg-white h-[100px] flex items-center justify-between gap-5 ">
+              <div className="w-full bg-white h-[100px] flex items-center justify-between  ">
                 <div>
                   <button
                     onClick={onClose}
@@ -95,19 +101,30 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                     />
                   </button>
                 </div>
-                <div className="w-full flex items-center justify-center gap-4">
+                <div className="w-full flex items-center justify-center gap-8">
                   <TextIconButton
                     icon="../../../../assets/icons/bell.svg"
                     activeIcon="../../../../assets/icons/blueBell.svg"
                     text="اعلانات"
-                    isActive
+                    isActive={activeTab === 'notifications'}
+                    onClick={() => handleTabSelect('notifications')}
+                    textSize={18}
+                    iconSize={28}
                   />
-                  <TextIconButton icon="../../../../assets/icons/headphone.svg" text="پشتیبانی" />
+                  <TextIconButton
+                    icon="../../../../assets/icons/headphone.svg"
+                    activeIcon="../../../../assets/icons/blueHeadphone.svg"
+                    text="پشتیبانی"
+                    isActive={activeTab === 'support'}
+                    onClick={() => handleTabSelect('support')}
+                    textSize={18}
+                    iconSize={28}
+                  />
                 </div>
               </div>
 
               {/* Content */}
-              {/* <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div> */}
+              <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div>
             </div>
           </motion.div>
         </div>

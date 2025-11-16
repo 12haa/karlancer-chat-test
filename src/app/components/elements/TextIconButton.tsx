@@ -53,7 +53,9 @@ const TextIconButton: React.FC<TextIconButtonProps> = ({
               width={iconSize}
               height={iconSize}
               className="object-contain"
-              style={{ filter: effectiveIconColor ? `drop-shadow(0 0 0 ${effectiveIconColor})` : undefined }}
+              style={{
+                filter: effectiveIconColor ? `drop-shadow(0 0 0 ${effectiveIconColor})` : undefined,
+              }}
             />
           ) : (
             <div style={{ color: effectiveIconColor }}>{iconToUse}</div>
