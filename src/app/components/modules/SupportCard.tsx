@@ -39,13 +39,8 @@ const SupportCard: React.FC<SupportCardProps> = ({ title, content, status, icon,
         )}
       </div>
       <div className="flex-grow overflow-hidden flex flex-col">
-        <div className="flex justify-between items-start">
-          <h3 className="text-gray-800 font-semibold text-right">{title}</h3>
-          <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(status)} text-white`}>
-            {status}
-          </span>
-        </div>
-        <p className="text-gray-600 text-right mt-1 text-sm overflow-hidden overflow-ellipsis line-clamp-2 flex-grow">
+        <h3 className="text-gray-800 font-semibold text-right mb-1">{title}</h3>
+        <p className="text-gray-600 text-right text-sm overflow-hidden overflow-ellipsis line-clamp-2 flex-grow">
           {content}
         </p>
       </div>

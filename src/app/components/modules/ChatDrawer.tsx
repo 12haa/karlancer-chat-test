@@ -14,15 +14,15 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'باز':
-        return 'bg-green-500';
+        return 'text-green-500';
       case 'در حال بررسی':
-        return 'bg-yellow-500';
+        return 'text-yellow-500';
       case 'پاسخ داده شده':
-        return 'bg-blue-500';
+        return 'text-blue-500';
       case 'بسته شده':
-        return 'bg-red-500';
+        return 'text-red-500';
       default:
-        return 'bg-gray-500';
+        return 'text-gray-500';
     }
   };
 
@@ -93,19 +93,13 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                 </div>
                 <div className="flex flex-col items-center">
                   <h2 className="text-lg font-bold text-right">{title}</h2>
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full mt-1 ${getStatusColor(
-                      status
-                    )} text-white`}
-                  >
-                    {status}
-                  </span>
+                  <span className={`text-xs mt-1 ${getStatusColor(status)}`}>{status}</span>
                 </div>
                 <div className="w-10"></div> {/* Spacer for alignment */}
               </div>
 
               {/* Chat messages */}
-              <div className="flex-grow overflow-y-auto p-4 bg-white m-4 rounded-2xl">
+              <div className="flex-grow overflow-y-auto p-4 bg-[#f4f4f8] m-4 rounded-2xl">
                 <div className="space-y-3">
                   {messages.map((message) => (
                     <div
@@ -117,8 +111,8 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                       <div
                         className={`max-w-[80%] p-3 rounded-2xl ${
                           message.sender === 'user'
-                            ? 'bg-blue-500 text-white rounded-bl-none'
-                            : 'bg-gray-200 text-gray-800 rounded-br-none'
+                            ? 'bg-[#10a5e7] text-white rounded-bl-none'
+                            : 'bg-white text-gray-800 rounded-br-none'
                         }`}
                       >
                         <p className="text-right">{message.text}</p>
