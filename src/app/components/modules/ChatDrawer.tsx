@@ -30,9 +30,24 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
 
   // Sample chat messages
   const [messages, setMessages] = useState([
-    { id: 1, text: 'سلام، چطور می‌تونم کمکتون کنم؟', sender: 'support', timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString() }, // 30 minutes ago
-    { id: 2, text: 'من نمی‌تونم به حساب خودم وارد شم.', sender: 'user', timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString() }, // 25 minutes ago
-    { id: 3, text: 'می‌تونید رمز عبورتون رو چک کنید؟', sender: 'support', timestamp: new Date(Date.now() - 20 * 60 * 1000).toISOString() }, // 20 minutes ago
+    {
+      id: 1,
+      text: 'سلام، چطور می‌تونم کمکتون کنم؟',
+      sender: 'support',
+      timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    }, // 30 minutes ago
+    {
+      id: 2,
+      text: 'من نمی‌تونم به حساب خودم وارد شم.',
+      sender: 'user',
+      timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+    }, // 25 minutes ago
+    {
+      id: 3,
+      text: 'می‌تونید رمز عبورتون رو چک کنید؟',
+      sender: 'support',
+      timestamp: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
+    }, // 20 minutes ago
   ]);
 
   const [newMessage, setNewMessage] = useState('');
@@ -114,8 +129,8 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                   {messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`flex ${
-                        message.sender === 'user' ? 'justify-end' : 'justify-start'
+                      className={`flex flex-col ${
+                        message.sender === 'user' ? 'items-end' : 'items-start'
                       }`}
                     >
                       <div
@@ -126,13 +141,27 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                         }`}
                       >
                         <p className="text-right">{message.text}</p>
-                        <p
-                          className={`text-xs mt-1 ${
-                            message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
+                      </div>
+                      <div
+                        className={`flex items-center w-[78%] mt-1 space-x-1  ${
+                          message.sender === 'user' ? 'space-x' : ''
+                        }`}
+                      >
+                        {message.sender === 'user' && (
+                          <Image
+                            src="../../../../assets/icons/seen.svg"
+                            width={14}
+                            height={14}
+                            alt="seen"
+                          />
+                        )}
+                        <span
+                          className={`text-xs ${
+                            message.sender === 'user' ? 'text-gray-500' : 'text-gray-500'
                           }`}
                         >
                           {formatRelativeTime(message.timestamp)}
-                        </p>
+                        </span>
                       </div>
                     </div>
                   ))}
