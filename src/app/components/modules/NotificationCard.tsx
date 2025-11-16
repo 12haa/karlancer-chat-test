@@ -18,12 +18,14 @@ const NotificationCard: React.FC<NotificationCardProps> = ({ date, title, conten
           </div>
         )}
       </div>
-      <div className="flex-grow">
+      <div className="flex-grow overflow-hidden">
         <div className="flex justify-between items-start">
-          <h3 className="text-gray-800 font-semibold text-right">{title}</h3>
-          <span className="text-xs text-gray-500">{date}</span>
+          <h3 className="text-gray-800 font-semibold text-right truncate max-w-[70%]">{title}</h3>
+          <span className="text-xs text-gray-500 flex-shrink-0">{date}</span>
         </div>
-        <p className="text-gray-600 text-right mt-1 text-sm">{content}</p>
+        <p className="text-gray-600 text-right mt-1 text-sm overflow-hidden overflow-ellipsis line-clamp-3">
+          {content}
+        </p>
       </div>
     </div>
   );

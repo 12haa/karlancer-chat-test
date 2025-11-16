@@ -40,6 +40,14 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                 date={notification.date}
                 title={notification.title}
                 content={notification.content}
+                icon={
+                  <Image
+                    src={'../../../../assets/icons/blueBell.svg'}
+                    height={24}
+                    width={24}
+                    alt="bell-icon"
+                  />
+                }
               />
             ))}
           </div>
