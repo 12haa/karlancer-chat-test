@@ -4,6 +4,7 @@ import Image from 'next/image';
 import TextIconButton from './TextIconButton';
 import NotificationCard from '../modules/NotificationCard';
 import SupportCard from '../modules/SupportCard';
+import ChatDrawer from '../modules/ChatDrawer';
 import { notificationData, supportData } from '../../constants/index';
 import Button from './Button';
 
@@ -16,6 +17,10 @@ interface DrawerProps {
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
   // State to manage the active tab within the drawer
   const [activeTab, setActiveTab] = useState<'notifications' | 'support'>('notifications');
+
+  // State for chat drawer
+  const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
+  const [selectedSupportItem, setSelectedSupportItem] = useState<any>(null);
 
   // Update active tab when content prop changes (for initial open)
   React.useEffect(() => {
@@ -64,6 +69,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                 key={supportItem.id}
                 title={supportItem.title}
                 content={supportItem.content}
+                status={supportItem.status}
                 icon={
                   <Image
                     src={'../../../../assets/icons/headphone.svg'}
@@ -72,6 +78,10 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                     alt="support-icon"
                   />
                 }
+                onClick={() => {
+                  setSelectedSupportItem(supportItem);
+                  setIsChatDrawerOpen(true);
+                }}
               />
             ))}
           </div>
@@ -156,6 +166,14 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
             </div>
           </motion.div>
         </div>
+      )}
+      {selectedSupportItem && (
+        <ChatDrawer
+          isOpen={isChatDrawerOpen}
+          onClose={() => setIsChatDrawerOpen(false)}
+          title={selectedSupportItem.title}
+          status={selectedSupportItem.status}
+        />
       )}
     </AnimatePresence>
   );
