@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import TextIconButton from './TextIconButton';
+import NotificationCard from '../modules/NotificationCard';
+import { notificationData } from '../../constants/index';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -23,18 +25,23 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
     }
   }, [content]);
 
+  // Dummy notification data
+
   // Content for each tab
   const getContent = () => {
     switch (activeTab) {
       case 'notifications':
         return (
-          <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Notifications</h2>
-            <div className="space-y-2">
-              <div className="p-3 bg-gray-100 rounded">New message received</div>
-              <div className="p-3 bg-gray-100 rounded">Payment confirmed</div>
-              <div className="p-3 bg-gray-100 rounded">Account updated</div>
-            </div>
+          <div className="p-4 space-y-3">
+            <h2 className="text-xl font-bold mb-4 text-right">اعلان‌ها</h2>
+            {notificationData.map((notification) => (
+              <NotificationCard
+                key={notification.id}
+                date={notification.date}
+                title={notification.title}
+                content={notification.content}
+              />
+            ))}
           </div>
         );
       case 'support':
