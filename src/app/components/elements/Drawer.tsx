@@ -5,6 +5,7 @@ import TextIconButton from './TextIconButton';
 import NotificationCard from '../modules/NotificationCard';
 import SupportCard from '../modules/SupportCard';
 import ChatDrawer from '../modules/ChatDrawer';
+import TicketModal from '../modules/TicketModal';
 import { notificationData, supportData } from '../../constants/index';
 import Button from './Button';
 
@@ -21,6 +22,9 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
   // State for chat drawer
   const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
   const [selectedSupportItem, setSelectedSupportItem] = useState<any>(null);
+
+  // State for ticket modal
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
 
   // Update active tab when content prop changes (for initial open)
   React.useEffect(() => {
@@ -84,6 +88,27 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
                 }}
               />
             ))}
+            {/* Floating button for new ticket */}
+            <button
+              onClick={() => setIsTicketModalOpen(true)}
+              className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors z-40"
+              aria-label="Add new ticket"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </button>
           </div>
         );
       default:
@@ -94,6 +119,26 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
   // Handle tab selection
   const handleTabSelect = (tab: 'notifications' | 'support') => {
     setActiveTab(tab);
+  };
+
+  // Handle ticket submission
+  const handleTicketSubmit = (title: string, description: string) => {
+    // Create a new ticket object
+    const newTicket = {
+      id: supportData.length + 1,
+      title: title,
+      content: description,
+      status: 'باز', // New tickets start with 'open' status
+    };
+
+    // In a real app, you would typically send this to an API
+    console.log('New ticket submitted:', newTicket);
+
+    // Close the modal
+    setIsTicketModalOpen(false);
+
+    // Optionally, you could add the new ticket to the list
+    // For now, we'll just log it and close the modal
   };
 
   return (
@@ -175,6 +220,11 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
           status={selectedSupportItem.status}
         />
       )}
+      <TicketModal
+        isOpen={isTicketModalOpen}
+        onClose={() => setIsTicketModalOpen(false)}
+        onSubmit={handleTicketSubmit}
+      />
     </AnimatePresence>
   );
 };
