@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -7,8 +8,6 @@ interface DrawerProps {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
-  if (!isOpen) return null;
-
   // Sample content for each drawer type
   const getContent = () => {
     switch (content) {
@@ -52,40 +51,53 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
-        onClick={onClose}
-      />
-      
-      {/* Drawer */}
-      <div 
-        className={`
-          absolute top-0 right-0 h-full w-80 bg-white shadow-lg
-          transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}
-      >
-        <div className="relative h-full flex flex-col">
-          {/* Close button */}
-          <button 
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Backdrop with blurry effect */}
+          <motion.div
+            className="absolute inset-0 bg-white bg-opacity-70"
+            style={{ backdropFilter: 'blur(8px)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={onClose}
-            className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10"
-            aria-label="Close drawer"
+          />
+
+          {/* Drawer */}
+          <motion.div
+            className="absolute top-0 right-0 h-full w-[90%] max-w-md bg-white shadow-lg"
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30, mass: 0.8 },
+              opacity: { duration: 0.2, ease: "easeInOut" }
+            }}
+            dir="ltr" // Ensure the drawer content remains in LTR
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          
-          {/* Content */}
-          <div className="flex-grow overflow-y-auto pt-14">
-            {getContent()}
-          </div>
+            <div className="relative h-full flex flex-col">
+              {/* Close button */}
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10"
+                aria-label="Close drawer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Content */}
+              <div className="flex-grow overflow-y-auto pt-14">
+                {getContent()}
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
 

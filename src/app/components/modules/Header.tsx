@@ -25,6 +25,9 @@ const Header = () => {
   return (
     <header className="flex w-full items-center min-h-[100px] justify-center px-2 bg-white">
       <div className="w-full items-center flex flex-row justify-between">
+        <div>
+          <IconButton icon="../../../../assets/icons/menu.svg" onClick={() => openDrawer('menu')} />
+        </div>
         <div className="flex items-center justify-center gap-2">
           <div>
             <IconButton
@@ -38,9 +41,6 @@ const Header = () => {
               onClick={() => openDrawer('wallet')}
             />
           </div>
-        </div>
-        <div>
-          <IconButton icon="../../../../assets/icons/menu.svg" onClick={() => openDrawer('menu')} />
         </div>
       </div>
       {drawerContent && (
