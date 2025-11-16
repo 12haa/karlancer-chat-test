@@ -17,9 +17,9 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-white rounded-2xl shadow-sm p-4 flex ${
-        actionButton ? 'h-[187px]' : 'h-[134px]'
-      } items-start gap-4 w-full max-w-md`}
+      className={`bg-white max-w-[388px] rounded-2xl shadow-sm ${
+        actionButton ? 'py-4' : 'py-6'
+      } px-3 flex min-h-[134px] items-start gap-4 max-w-md`}
     >
       <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
         {icon || (
