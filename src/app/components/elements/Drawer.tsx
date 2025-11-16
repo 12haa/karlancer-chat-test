@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import TextIconButton from './TextIconButton';
 import NotificationCard from '../modules/NotificationCard';
-import { notificationData } from '../../constants/index';
+import SupportCard from '../modules/SupportCard';
+import { notificationData, supportData } from '../../constants/index';
 import Button from './Button';
 
 interface DrawerProps {
@@ -56,13 +57,23 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
         );
       case 'support':
         return (
-          <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Support</h2>
-            <div className="space-y-2">
-              <div className="p-3 bg-gray-100 rounded">Contact support</div>
-              <div className="p-3 bg-gray-100 rounded">Frequently asked questions</div>
-              <div className="p-3 bg-gray-100 rounded">Open ticket</div>
-            </div>
+          <div className="p-4 space-y-3">
+            <h2 className="text-xl font-bold mb-4 text-right">پشتیبانی</h2>
+            {supportData.map((supportItem) => (
+              <SupportCard
+                key={supportItem.id}
+                title={supportItem.title}
+                content={supportItem.content}
+                icon={
+                  <Image
+                    src={'../../../../assets/icons/headphone.svg'}
+                    height={24}
+                    width={24}
+                    alt="support-icon"
+                  />
+                }
+              />
+            ))}
           </div>
         );
       default:
