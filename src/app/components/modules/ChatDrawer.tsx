@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Button from '../elements/Button';
 
 interface ChatDrawerProps {
   isOpen: boolean;
@@ -77,7 +78,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
             <div className="relative h-full flex flex-col">
               {/* Header */}
               <div className="w-full bg-white min-h-[100px] flex items-center justify-between px-4 py-3">
-                <div>
+                <div className="flex flex-row items-center justify-center">
                   <button
                     onClick={onClose}
                     className="p-1 rounded-full hover:bg-gray-100 z-10 cursor-pointer w-fit"
@@ -90,12 +91,20 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                       alt="arrow-right"
                     />
                   </button>
-                </div>
-                <div className="flex flex-col items-center">
-                  <h2 className="text-lg font-bold text-right">{title}</h2>
-                  <span className={`text-xs mt-1 ${getStatusColor(status)}`}>{status}</span>
+                  <div className="flex flex-col items-start">
+                    <h2 className="text-lg font-bold text-right">{title}</h2>
+                    <span className={`text-md mt-1 ${getStatusColor(status)}`}>{status}</span>
+                  </div>
                 </div>
                 <div className="w-10"></div> {/* Spacer for alignment */}
+                <div className="w-fit">
+                  <Button
+                    text="بازگشت"
+                    className=" text-black border border-1 border-[#dadadd] rounded-xl"
+                    bgColor="bg-white"
+                    textColor="text-[#434349]"
+                  />
+                </div>
               </div>
 
               {/* Chat messages */}
