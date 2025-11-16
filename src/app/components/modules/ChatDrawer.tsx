@@ -120,6 +120,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                     className=" text-black border border-1 border-[#dadadd] rounded-xl"
                     bgColor="bg-white"
                     textColor="text-[#434349]"
+                    onClick={onClose}
                   />
                 </div>
               </div>
