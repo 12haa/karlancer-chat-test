@@ -8,6 +8,9 @@ interface IconButtonProps {
   onClick?: () => void;
   className?: string;
   icon?: ReactNode | string;
+  text?: string;
+  textPosition?: 'top' | 'bottom' | 'left' | 'right';
+  gap?: number;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -16,16 +19,29 @@ const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   className = '',
   icon,
+  text,
+  textPosition = 'bottom',
+  gap = 4,
 }) => {
+  const flexDirection = {
+    top: 'flex-col-reverse',
+    bottom: 'flex-col',
+    left: 'flex-row-reverse',
+    right: 'flex-row',
+  }[textPosition];
+
   return (
     <button
       onClick={onClick}
-      className={`w-[${size}px] h-[${size}px] rounded-[18px] border border-gray-200 flex justify-center items-center cursor-pointer shadow-sm hover:shadow-md transition-all outline-none p-2 ${className}`}
-      style={{ backgroundColor }}
-      aria-label="Icon button"
+      className={`flex ${flexDirection} items-center justify-center cursor-pointer outline-none ${className}`}
+      style={{ gap: `${gap}px` }}
+      aria-label={text || 'Icon button'}
     >
       {icon && (
-        <div className="flex items-center justify-center w-full h-full">
+        <div
+          className={`w-[${size}px] h-[${size}px] rounded-[18px] border border-gray-200 flex justify-center items-center shadow-sm hover:shadow-md transition-all p-2`}
+          style={{ backgroundColor }}
+        >
           {typeof icon === 'string' ? (
             <Image src={icon} alt="Icon" width={24} height={24} className="object-contain" />
           ) : (
@@ -33,6 +49,7 @@ const IconButton: React.FC<IconButtonProps> = ({
           )}
         </div>
       )}
+      {text && <span className="text-sm text-gray-700">{text}</span>}
     </button>
   );
 };

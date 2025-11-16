@@ -89,26 +89,25 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
               />
             ))}
             {/* Floating button for new ticket */}
-            <button
-              onClick={() => setIsTicketModalOpen(true)}
-              className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors z-40"
-              aria-label="Add new ticket"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="fixed bottom-6 right-6 z-40">
+              <button
+                onClick={() => setIsTicketModalOpen(true)}
+                className=" h-[64px] w-[168px] rounded-xl bg-[#10a5e7] cursor-pointer flex items-center justify-center shadow-lg hover:bg-blue-600 transition-colors p-4"
+                aria-label="Add new ticket"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-            </button>
+                <div className="flex flex-row gap-2">
+                  <div>
+                    <Image
+                      src={'../../../../assets/icons/Edit.svg'}
+                      height={24}
+                      width={24}
+                      alt="add-ticket"
+                    />
+                  </div>
+                  <p className="text-white text-[18px]">تیکت جدید</p>
+                </div>
+              </button>
+            </div>
           </div>
         );
       default:
