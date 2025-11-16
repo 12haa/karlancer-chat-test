@@ -117,7 +117,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
                 <div className="w-fit">
                   <Button
                     text="بازگشت"
-                    className=" text-black border border-1 border-[#dadadd] rounded-xl"
+                    className=" text-black border border-1 border-[#dadadd] rounded-xl cursor-pointer"
                     bgColor="bg-white"
                     textColor="text-[#434349]"
                     onClick={onClose}
