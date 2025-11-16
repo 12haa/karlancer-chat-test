@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Button from '../elements/Button';
 import { formatRelativeTime } from '../../constants/index';
+import IconButton from '../elements/IconButton';
 
 interface ChatDrawerProps {
   isOpen: boolean;
@@ -170,34 +171,26 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ isOpen, onClose, title, status 
 
               {/* Message input */}
               <div className="p-4 bg-white m-4 rounded-2xl flex gap-2">
+                <IconButton
+                  backgroundColor="#f4f7f9"
+                  // className="p-4"
+                  size={30}
+                  icon="../../../../assets/icons/attachment.svg"
+                />
                 <input
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="پیام خود را بنویسید..."
-                  className="flex-grow p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-grow p-3 bg-[#f4f7f9] rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 />
-                <button
-                  onClick={handleSendMessage}
-                  className="bg-blue-500 text-white p-3 rounded-2xl hover:bg-blue-600 transition-colors"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-send"
-                  >
-                    <path d="m22 2-7 20-4-9-9-4Z" />
-                    <path d="M22 2 11 13" />
-                  </svg>
-                </button>
+                <IconButton
+                  backgroundColor="#f4f7f9"
+                  // className="p-4"
+                  size={2}
+                  icon="../../../../assets/icons/send.svg"
+                />
               </div>
             </div>
           </motion.div>
