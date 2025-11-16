@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import TextIconButton from './TextIconButton';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -57,7 +58,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
         <div className="fixed inset-0 z-50 flex">
           {/* Backdrop with blurry effect */}
           <motion.div
-            className="absolute inset-0 bg-white bg-opacity-70"
+            className="absolute inset-0 bg-[#f4f4f8] bg-opacity-70"
             style={{ backdropFilter: 'blur(8px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -68,7 +69,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
 
           {/* Drawer */}
           <motion.div
-            className="absolute top-0 right-0 h-full w-[100%] max-w-md bg-white shadow-lg"
+            className="absolute top-0 right-0 h-full w-[100%] max-w-md bg-[#f4f4f8] shadow-lg"
             initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
@@ -77,23 +78,36 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, content }) => {
               opacity: { duration: 0.2, ease: 'easeInOut' },
             }}
           >
-            <div className="relative h-full flex flex-col">
+            <div className="relative h-full flex flex-col  gap-4">
               {/* Close button */}
-              <button
-                onClick={onClose}
-                className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100 z-10 cursor-pointer"
-                aria-label="Close drawer"
-              >
-                <Image
-                  src="../../../../assets/icons/arrowRight.svg"
-                  width={28}
-                  height={28}
-                  alt="arrow-right"
-                />
-              </button>
+              <div className="w-full bg-white h-[100px] flex items-center justify-between gap-5 ">
+                <div>
+                  <button
+                    onClick={onClose}
+                    className=" p-1 rounded-full hover:bg-gray-100 z-10 cursor-pointer w-fit"
+                    aria-label="Close drawer"
+                  >
+                    <Image
+                      src="../../../../assets/icons/arrowRight.svg"
+                      width={28}
+                      height={28}
+                      alt="arrow-right"
+                    />
+                  </button>
+                </div>
+                <div className="w-full flex items-center justify-center gap-4">
+                  <TextIconButton
+                    icon="../../../../assets/icons/bell.svg"
+                    activeIcon="../../../../assets/icons/blueBell.svg"
+                    text="اعلانات"
+                    isActive
+                  />
+                  <TextIconButton icon="../../../../assets/icons/headphone.svg" text="پشتیبانی" />
+                </div>
+              </div>
 
               {/* Content */}
-              <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div>
+              {/* <div className="flex-grow overflow-y-auto pt-14">{getContent()}</div> */}
             </div>
           </motion.div>
         </div>
